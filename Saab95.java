@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Saab95{
+public class Saab95 extends Vehicle{
 
     private boolean turboOn;
 
@@ -12,43 +12,16 @@ public class Saab95{
         modelName = "Saab95";
         stopEngine();
     }
-    
-    public int getNrDoors(){
-        return nrDoors;
-    }
-    public double getEnginePower(){
-        return enginePower;
-    }
 
-    public double getCurrentSpeed(){
-        return currentSpeed;
-    }
-
-    public Color getColor(){
-        return color;
-    }
-
-    public void setColor(Color clr){
-	    color = clr;
-    }
-
-    public void startEngine(){
-	    currentSpeed = 0.1;
-    }
-
-    public void stopEngine(){
-	    currentSpeed = 0;
-    }
-
-    public void setTurboOn(){
+    private void setTurboOn(){
 	    turboOn = true;
     }
 
-    public void setTurboOff(){
+    private void setTurboOff(){
 	    turboOn = false;
     }
     
-    public double speedFactor(){
+    private double speedFactor(){
         double turbo = 1;
         if(turboOn) turbo = 1.3;
         return enginePower * 0.01 * turbo;

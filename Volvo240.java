@@ -1,10 +1,10 @@
 import java.awt.*;
 
-public class Volvo240{
+public class Volvo240 extends Vehicle{
 
     private final static double trimFactor = 1.25;
     
-    public Volvo240(){
+    private Volvo240(){
         nrDoors = 4;
         color = Color.black;
         enginePower = 100;
@@ -18,7 +18,7 @@ public class Volvo240{
 	    currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
     }
 
-    public void decrementSpeed(double amount){
+    private void decrementSpeed(double amount){
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
     }
 
