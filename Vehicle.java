@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.io.Console;
 
-public class Vehicle implements Movable {
+public abstract class Vehicle implements Movable {
 
     public int nrDoors; // Number of doors on the car
     public double enginePower; // Engine power of the car
@@ -11,7 +11,8 @@ public class Vehicle implements Movable {
 
     public double xPos = 0; //X-position
     public double yPos = 0; //Y-position
-    private int currentDirection = 1; //current facing direction
+    public int currentDirection = 1; //current facing direction
+    public double speed;
 
     public int getNrDoors(){
         return nrDoors;
@@ -34,7 +35,12 @@ public class Vehicle implements Movable {
     public void stopEngine(){
         currentSpeed = 0;
     }
-
+    public void incrementSpeed(double amount) {
+        currentSpeed = Math.min(getCurrentSpeed() + speed * amount, enginePower);
+    }
+    public void decrementSpeed(double amount) {
+        currentSpeed = Math.min(getCurrentSpeed() - speed * amount,0);
+    }
     public void turnRight(){
         currentDirection -= 1;
 
@@ -69,7 +75,5 @@ public class Vehicle implements Movable {
             case 4 ->
                 yPos -= currentSpeed;
         }
-
-        xPos += currentSpeed;
     }
 }
