@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Saab95 extends Vehicle{
 
-    private boolean turboOn;
+    public boolean turboOn;
 
     public Saab95(){
         nrDoors = 2;
@@ -13,27 +13,18 @@ public class Saab95 extends Vehicle{
         stopEngine();
     }
 
-    private void setTurboOn(){
+    public void setTurboOn(){
 	    turboOn = true;
     }
 
-    private void setTurboOff(){
+    public void setTurboOff(){
 	    turboOn = false;
     }
     
-    private void speedFactor(){
+    public void speedFactor(){
         double turbo = 1;
         if(turboOn) turbo = 1.3;
         speed = enginePower * 0.01 * turbo;
     }
 
-    // TODO fix this method according to lab pm
-    public void gas(double amount){
-        incrementSpeed(amount);
-    }
-
-    // TODO fix this method according to lab pm
-    public void brake(double amount){
-        decrementSpeed(amount);
-    }
 }
