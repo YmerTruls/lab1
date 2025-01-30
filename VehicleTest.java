@@ -37,6 +37,8 @@ public class VehicleTest {
 
             assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
         }
+
+
         Saab95 saab = new Saab95();
         saab.currentSpeed = 1;
 
@@ -149,12 +151,16 @@ public class VehicleTest {
     public void testIncrementSpeed() {
         Vehicle volvo = new Volvo240();
         volvo.startEngine();
+        volvo.speed = 1; //Set speed other than 0.
+
         double speed_before = volvo.getCurrentSpeed();
         volvo.incrementSpeed(100);
         assertNotEquals(speed_before, volvo.getCurrentSpeed());
 
         Saab95 saab = new Saab95();
         saab.startEngine();
+        saab.speed = 1; //Set speed other than 0.
+
         double speed_beforeI = saab.getCurrentSpeed();
         saab.incrementSpeed(10);
         assertNotEquals(speed_beforeI, saab.getCurrentSpeed());
@@ -246,10 +252,3 @@ public class VehicleTest {
         System.out.println("All tests successful.");
     }
 }
-
-
-
-
-
-
-
