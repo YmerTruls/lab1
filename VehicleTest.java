@@ -204,9 +204,4 @@ public class VehicleTest {
         volvo.brake(5);
         assertEquals(prevSpeed, volvo.getCurrentSpeed());
     }
-
-    @AfterAll
-    public static void afterAll() {
-        System.out.println("All tests successful.");
-    }
 }
