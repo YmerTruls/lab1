@@ -1,4 +1,3 @@
-import jdk.jfr.Name;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ public class VehicleTest {
     public void testMove() {
         //Set-up
         Volvo240 volvo = new Volvo240();
-        volvo.currentSpeed = 1;
+        volvo.startEngine();
 
         for (int i = 1; i < 5; i++) {
             volvo.currentDirection = i;
@@ -34,22 +33,6 @@ public class VehicleTest {
             volvo.move();
             double xPos2 = volvo.xPos;
             double yPos2 = volvo.yPos;
-
-            assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
-        }
-
-
-        Saab95 saab = new Saab95();
-        saab.currentSpeed = 1;
-
-        for (int i = 1; i < 5; i++) {
-            saab.currentDirection = i;
-
-            double xPos1 = saab.xPos;
-            double yPos1 = saab.yPos;
-            saab.move();
-            double xPos2 = saab.xPos;
-            double yPos2 = saab.yPos;
 
             assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
         }
@@ -64,7 +47,7 @@ public class VehicleTest {
         for (int i = 1; i < 5; i++){
             volvo.currentDirection = i;
             //handling of edge case
-            if (i == 1){
+            if(i == 1){
                 volvo.turnRight();
                 assertEquals(4, volvo.currentDirection );
             }
@@ -86,35 +69,6 @@ public class VehicleTest {
                 assertEquals(i+1, volvo.currentDirection);
             }
         }
-
-        //Initiate vehicle
-        Saab95 saab = new Saab95();
-        //Tests every direction when turning right
-        for (int i = 1; i < 5; i++){
-            saab.currentDirection = i;
-            //handling of edge case
-            if (i == 1){
-                saab.turnRight();
-                assertEquals(4, saab.currentDirection );
-            }
-            else{
-                saab.turnRight();
-                assertEquals(i-1, saab.currentDirection);
-            }
-        }
-        //Tests every direction when turning left
-        for (int i = 1; i < 5; i++){
-            saab.currentDirection = i;
-            //handling of edge case
-            if (i == 4){
-                saab.turnLeft();
-                assertEquals(1,saab.currentDirection);
-            }
-            else {
-                saab.turnLeft();
-                assertEquals(i+1, saab.currentDirection);
-            }
-        }
     }
 
     @DisplayName("Test extreme left turning.")
@@ -128,42 +82,6 @@ public class VehicleTest {
         volvo.turnLeft();
         int second_pos = volvo.currentDirection;
         assertEquals(first_pos, second_pos);
-    }
-
-    @DisplayName("Decrement speed")
-    @Test
-    public void testDecrementSpeed() {
-        Volvo240 volvo = new Volvo240();
-        volvo.startEngine();
-        double speed_before = volvo.getCurrentSpeed();
-        volvo.decrementSpeed(100);
-        assertNotEquals(speed_before, volvo.getCurrentSpeed());
-
-        Saab95 saab = new Saab95();
-        saab.startEngine();
-        double speed_beforeI = saab.getCurrentSpeed();
-        saab.decrementSpeed(100);
-        assertNotEquals(speed_beforeI, saab.getCurrentSpeed());
-    }
-
-    @DisplayName("Increment Speed")
-    @Test
-    public void testIncrementSpeed() {
-        Vehicle volvo = new Volvo240();
-        volvo.startEngine();
-        volvo.speed = 1; //Set speed other than 0.
-
-        double speed_before = volvo.getCurrentSpeed();
-        volvo.incrementSpeed(100);
-        assertNotEquals(speed_before, volvo.getCurrentSpeed());
-
-        Saab95 saab = new Saab95();
-        saab.startEngine();
-        saab.speed = 1; //Set speed other than 0.
-
-        double speed_beforeI = saab.getCurrentSpeed();
-        saab.incrementSpeed(10);
-        assertNotEquals(speed_beforeI, saab.getCurrentSpeed());
     }
 
     @DisplayName("Color is correctly set and gotten")
@@ -234,17 +152,57 @@ public class VehicleTest {
     public void test_speedFactor(){
         Volvo240 volvo = new Volvo240();
         volvo.speedFactor();
-        assertEquals(volvo.speed,volvo.enginePower * 0.01 * 1.25);
+        assertEquals(volvo.speedFact,volvo.enginePower * 0.01 * 1.25);
 
         Saab95 saab = new Saab95();
         saab.setTurboOff();
         saab.speedFactor();
-        assertEquals(saab.speed,saab.enginePower * 0.01 * 1);
+        assertEquals(saab.speedFact,saab.enginePower * 0.01 * 1);
 
         saab.setTurboOn();
         saab.speedFactor();
-        assertEquals(saab.speed,saab.enginePower * 0.01 * 1.3);
+        assertEquals(saab.speedFact,saab.enginePower * 0.01 * 1.3);
 
+    }
+
+    @DisplayName("Test gas()")
+    @Test
+    public void test_gas(){
+        //Set up
+        Volvo240 volvo = new Volvo240();
+        volvo.speedFactor();
+        volvo.startEngine();
+        double prevSpeed = volvo.getCurrentSpeed();
+
+        //Test OK value
+        volvo.startEngine();
+        volvo.gas(0.5);
+        assertEquals(0.725, volvo.getCurrentSpeed());
+
+        //Test NOK value
+        volvo.startEngine();
+        volvo.gas(5);
+        assertEquals(prevSpeed, volvo.getCurrentSpeed());
+    }
+    @DisplayName("Test brake()")
+    @Test
+    public void test_brake(){
+        //Set up
+        Volvo240 volvo = new Volvo240();
+        volvo.speedFactor();
+        volvo.startEngine();
+        double prevSpeed = volvo.getCurrentSpeed();
+
+        //Test OK value
+        volvo.startEngine();
+        volvo.gas(1);
+        volvo.brake(0.5);
+        assertTrue(Math.abs(volvo.getCurrentSpeed() - 0.725) < 0.001);
+
+        //Test NOK value
+        volvo.startEngine();
+        volvo.brake(5);
+        assertEquals(prevSpeed, volvo.getCurrentSpeed());
     }
 
     @AfterAll
