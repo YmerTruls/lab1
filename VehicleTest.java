@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +11,10 @@ public class VehicleTest {
     @Test
     public void testModel() {
         Volvo240 volvo = new Volvo240();
-        assertEquals("Volvo240", volvo.modelName);
+        assertEquals("Volvo240", volvo.getModelName());
 
         Saab95 saab = new Saab95();
-        assertEquals("Saab95", saab.modelName);
+        assertEquals("Saab95", saab.getModelName());
     }
 
     @DisplayName("Test if move is possible")
@@ -28,11 +27,11 @@ public class VehicleTest {
         for (int i = 1; i < 5; i++) {
             volvo.currentDirection = i;
 
-            double xPos1 = volvo.xPos;
-            double yPos1 = volvo.yPos;
+            double xPos1 = volvo.getxPos();
+            double yPos1 = volvo.getyPos();
             volvo.move();
-            double xPos2 = volvo.xPos;
-            double yPos2 = volvo.yPos;
+            double xPos2 = volvo.getxPos();
+            double yPos2 = volvo.getyPos();
 
             assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
         }
@@ -47,12 +46,11 @@ public class VehicleTest {
         for (int i = 1; i < 5; i++){
             volvo.currentDirection = i;
             //handling of edge case
+            volvo.turnRight();
             if(i == 1){
-                volvo.turnRight();
                 assertEquals(4, volvo.currentDirection );
             }
             else{
-                volvo.turnRight();
                 assertEquals(i-1, volvo.currentDirection);
             }
         }
@@ -60,12 +58,11 @@ public class VehicleTest {
         for (int i = 1; i < 5; i++){
             volvo.currentDirection = i;
             //handling of edge case
+            volvo.turnLeft();
             if (i == 4){
-                volvo.turnLeft();
                 assertEquals(1,volvo.currentDirection);
             }
             else {
-                volvo.turnLeft();
                 assertEquals(i+1, volvo.currentDirection);
             }
         }
@@ -152,16 +149,16 @@ public class VehicleTest {
     public void test_speedFactor(){
         Volvo240 volvo = new Volvo240();
         volvo.speedFactor();
-        assertEquals(volvo.speedFact,volvo.enginePower * 0.01 * 1.25);
+        assertEquals(volvo.speedFactor(),volvo.getEnginePower() * 0.01 * 1.25);
 
         Saab95 saab = new Saab95();
         saab.setTurboOff();
         saab.speedFactor();
-        assertEquals(saab.speedFact,saab.enginePower * 0.01 * 1);
+        assertEquals(saab.speedFactor(),saab.getEnginePower() * 0.01 * 1);
 
         saab.setTurboOn();
         saab.speedFactor();
-        assertEquals(saab.speedFact,saab.enginePower * 0.01 * 1.3);
+        assertEquals(saab.speedFactor(),saab.getEnginePower() * 0.01 * 1.3);
 
     }
 

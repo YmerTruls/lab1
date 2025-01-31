@@ -2,18 +2,41 @@ import java.awt.*;
 
 public abstract class Vehicle implements Movable {
 
-    protected int nrDoors; // Number of doors on the car
-    protected double enginePower; // Engine power of the car
-    private double currentSpeed; // The current speed of the car
-    protected Color color; // Color of the car
-    protected String modelName; // The car model name
 
-    protected double xPos = 0; //X-position
-    protected double yPos = 0; //Y-position
-    protected int currentDirection = 1; //current facing direction
-    protected double speedFact;
+
+    private final int nrDoors; // Number of doors on the car
+    private final double enginePower; // Engine power of the car
+    private double currentSpeed; // The current speed of the car
+    private Color color; // Color of the car
+    private final String modelName; // The car model name
+
+    private double xPos = 0; //X-position
+    private double yPos = 0; //Y-position
+    public int currentDirection = 1; //current facing direction
+    public abstract double speedFactor();
+
+    public Vehicle(int nrDoors, double enginePower, Color color, String modelName) {
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.modelName = modelName;
+        stopEngine(); // Set speed to 0 initially
+    }
+
+    public double getxPos(){
+        return xPos;
+    }
+
+    public double getyPos() {
+        return yPos;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
 
     public int getNrDoors(){
+
         return nrDoors;
     }
     public double getEnginePower(){
@@ -35,10 +58,10 @@ public abstract class Vehicle implements Movable {
         currentSpeed = 0;
     }
     public void incrementSpeed(double amount) {
-        currentSpeed = Math.min(getCurrentSpeed() + speedFact * amount, enginePower);
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
     public void decrementSpeed(double amount) {
-        currentSpeed = Math.max(getCurrentSpeed() - speedFact * amount, 0);
+        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
     public void turnRight(){
         currentDirection -= 1;
@@ -65,13 +88,13 @@ public abstract class Vehicle implements Movable {
     public void move(){
         switch(currentDirection){
             case 1 ->
-                xPos += currentSpeed;
+                    xPos += currentSpeed;
             case 2 ->
-                yPos += currentSpeed;
+                    yPos += currentSpeed;
             case 3 ->
-                xPos -= currentSpeed;
+                    xPos -= currentSpeed;
             case 4 ->
-                yPos -= currentSpeed;
+                    yPos -= currentSpeed;
         }
     }
 
