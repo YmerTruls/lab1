@@ -34,6 +34,8 @@ public abstract class Vehicle implements Movable {
     public void stopEngine(){
         currentSpeed = 0;
     }
+    public void setCurrentDirection(int direction){ currentDirection = direction;}
+    public int getCurrentDirection(){return currentDirection;}
     public void incrementSpeed(double amount) {
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
@@ -41,18 +43,18 @@ public abstract class Vehicle implements Movable {
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
     public void turnRight(){
-        currentDirection -= 1;
+        setCurrentDirection(getCurrentDirection()-1);
 
-        if(currentDirection == 0){
-            currentDirection = 4;
+        if(getCurrentDirection() == 0){
+            setCurrentDirection(4);
         }
     }
 
     public void turnLeft(){
-        currentDirection += 1;
+        setCurrentDirection(getCurrentDirection()+1);
 
-        if(currentDirection == 5){
-            currentDirection = 1;
+        if(getCurrentDirection() == 5){
+            setCurrentDirection(1);
         }
     }
 
@@ -63,7 +65,7 @@ public abstract class Vehicle implements Movable {
     // when 5 set to one, when 0 set to 4
 
     public void move(){
-        switch(currentDirection){
+        switch(getCurrentDirection()){
             case 1 ->
                 xPos += currentSpeed;
             case 2 ->
@@ -72,6 +74,8 @@ public abstract class Vehicle implements Movable {
                 xPos -= currentSpeed;
             case 4 ->
                 yPos -= currentSpeed;
+            default -> throw new
+                    IllegalStateException("Unexpected value (getCurrentDirection): " + getCurrentDirection());
         }
     }
 

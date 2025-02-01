@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ public class VehicleTest {
         volvo.startEngine();
 
         for (int i = 1; i < 5; i++) {
-            volvo.currentDirection = i;
+            volvo.setCurrentDirection(i);
 
             double xPos1 = volvo.xPos;
             double yPos1 = volvo.yPos;
@@ -36,6 +35,10 @@ public class VehicleTest {
 
             assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
         }
+
+        //Test illegal direction
+        volvo.setCurrentDirection(0);
+        assertThrows(IllegalStateException.class, volvo::move);
     }
 
     @DisplayName("Test all turns.")
@@ -45,28 +48,26 @@ public class VehicleTest {
         Volvo240 volvo = new Volvo240();
         //Tests every direction when turning right
         for (int i = 1; i < 5; i++){
-            volvo.currentDirection = i;
+            volvo.setCurrentDirection(i);
             //handling of edge case
+            volvo.turnRight();
             if(i == 1){
-                volvo.turnRight();
-                assertEquals(4, volvo.currentDirection );
+                assertEquals(4, volvo.getCurrentDirection());
             }
             else{
-                volvo.turnRight();
-                assertEquals(i-1, volvo.currentDirection);
+                assertEquals(i-1, volvo.getCurrentDirection());
             }
         }
         //Tests every direction when turning left
         for (int i = 1; i < 5; i++){
-            volvo.currentDirection = i;
+            volvo.setCurrentDirection(i);
             //handling of edge case
+            volvo.turnLeft();
             if (i == 4){
-                volvo.turnLeft();
-                assertEquals(1,volvo.currentDirection);
+                assertEquals(1,volvo.getCurrentDirection());
             }
             else {
-                volvo.turnLeft();
-                assertEquals(i+1, volvo.currentDirection);
+                assertEquals(i+1, volvo.getCurrentDirection());
             }
         }
     }
@@ -152,7 +153,7 @@ public class VehicleTest {
     @DisplayName("Test gas()")
     @Test
     public void test_gas(){
-        //Set up
+        //Set-up
         Volvo240 volvo = new Volvo240();
         volvo.startEngine();
         double prevSpeed = volvo.getCurrentSpeed();
@@ -166,11 +167,15 @@ public class VehicleTest {
         volvo.startEngine();
         volvo.gas(5);
         assertEquals(prevSpeed, volvo.getCurrentSpeed());
+
+        volvo.startEngine();
+        volvo.gas(-1);
+        assertEquals(prevSpeed, volvo.getCurrentSpeed());
     }
     @DisplayName("Test brake()")
     @Test
     public void test_brake(){
-        //Set up
+        //Set-up
         Volvo240 volvo = new Volvo240();
         volvo.startEngine();
         double prevSpeed = volvo.getCurrentSpeed();
@@ -179,11 +184,15 @@ public class VehicleTest {
         volvo.startEngine();
         volvo.gas(1);
         volvo.brake(0.5);
-        assertTrue(Math.abs(volvo.getCurrentSpeed() - 0.725) < 0.001);
+        assertEquals(0.725, volvo.getCurrentSpeed(), 0.001);
 
         //Test NOK value
         volvo.startEngine();
         volvo.brake(5);
+        assertEquals(prevSpeed, volvo.getCurrentSpeed());
+
+        volvo.startEngine();
+        volvo.brake(-1);
         assertEquals(prevSpeed, volvo.getCurrentSpeed());
     }
 }
