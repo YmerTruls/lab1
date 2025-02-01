@@ -11,7 +11,7 @@ public class Volvo240 extends Vehicle{
         modelName = "Volvo240";
         stopEngine();
     }
-    protected void speedFactor(){
-    speedFact = enginePower * 0.01 * trimFactor;
+    public double speedFactor(){
+    return enginePower * 0.01 * trimFactor;
     }
 }

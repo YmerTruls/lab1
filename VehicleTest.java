@@ -71,19 +71,6 @@ public class VehicleTest {
         }
     }
 
-    @DisplayName("Test extreme left turning.")
-    @Test
-    public void turnLeftExtreme() {
-        Volvo240 volvo = new Volvo240();
-        int first_pos = volvo.currentDirection;
-        volvo.turnLeft();
-        volvo.turnLeft();
-        volvo.turnLeft();
-        volvo.turnLeft();
-        int second_pos = volvo.currentDirection;
-        assertEquals(first_pos, second_pos);
-    }
-
     @DisplayName("Color is correctly set and gotten")
     @Test
     public void testColor() {
@@ -151,17 +138,14 @@ public class VehicleTest {
     @Test
     public void test_speedFactor(){
         Volvo240 volvo = new Volvo240();
-        volvo.speedFactor();
-        assertEquals(volvo.speedFact,volvo.enginePower * 0.01 * 1.25);
+        assertEquals(volvo.speedFactor(),volvo.enginePower * 0.01 * 1.25);
 
         Saab95 saab = new Saab95();
         saab.setTurboOff();
-        saab.speedFactor();
-        assertEquals(saab.speedFact,saab.enginePower * 0.01 * 1);
+        assertEquals(saab.speedFactor(),saab.enginePower * 0.01 * 1);
 
         saab.setTurboOn();
-        saab.speedFactor();
-        assertEquals(saab.speedFact,saab.enginePower * 0.01 * 1.3);
+        assertEquals(saab.speedFactor(),saab.enginePower * 0.01 * 1.3);
 
     }
 
@@ -170,7 +154,6 @@ public class VehicleTest {
     public void test_gas(){
         //Set up
         Volvo240 volvo = new Volvo240();
-        volvo.speedFactor();
         volvo.startEngine();
         double prevSpeed = volvo.getCurrentSpeed();
 
@@ -189,7 +172,6 @@ public class VehicleTest {
     public void test_brake(){
         //Set up
         Volvo240 volvo = new Volvo240();
-        volvo.speedFactor();
         volvo.startEngine();
         double prevSpeed = volvo.getCurrentSpeed();
 

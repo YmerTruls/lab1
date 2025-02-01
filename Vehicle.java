@@ -3,7 +3,7 @@ import java.awt.*;
 public abstract class Vehicle implements Movable {
 
     protected int nrDoors; // Number of doors on the car
-    protected double enginePower; // Engine power of the car
+    public double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
@@ -11,7 +11,7 @@ public abstract class Vehicle implements Movable {
     protected double xPos = 0; //X-position
     protected double yPos = 0; //Y-position
     protected int currentDirection = 1; //current facing direction
-    protected double speedFact;
+    public abstract double speedFactor();
 
     public int getNrDoors(){
         return nrDoors;
@@ -35,10 +35,10 @@ public abstract class Vehicle implements Movable {
         currentSpeed = 0;
     }
     public void incrementSpeed(double amount) {
-        currentSpeed = Math.min(getCurrentSpeed() + speedFact * amount, enginePower);
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
     public void decrementSpeed(double amount) {
-        currentSpeed = Math.max(getCurrentSpeed() - speedFact * amount, 0);
+        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
     public void turnRight(){
         currentDirection -= 1;
