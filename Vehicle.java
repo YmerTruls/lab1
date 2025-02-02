@@ -12,7 +12,7 @@ public abstract class Vehicle implements Movable {
 
     private double xPos = 0; //X-position
     private double yPos = 0; //Y-position
-    public int currentDirection = 1; //current facing direction
+    private int currentDirection = 1; //current facing direction
     public abstract double speedFactor();
 
     public Vehicle(int nrDoors, double enginePower, Color color, String modelName) {
@@ -27,6 +27,7 @@ public abstract class Vehicle implements Movable {
         return xPos;
     }
 
+
     public double getyPos() {
         return yPos;
     }
@@ -36,7 +37,6 @@ public abstract class Vehicle implements Movable {
     }
 
     public int getNrDoors(){
-
         return nrDoors;
     }
     public double getEnginePower(){
@@ -57,6 +57,12 @@ public abstract class Vehicle implements Movable {
     public void stopEngine(){
         currentSpeed = 0;
     }
+    public void setCurrentDirection(int direction){
+        currentDirection = direction;
+    }
+    public int getCurrentDirection(){
+        return currentDirection;
+    }
     public void incrementSpeed(double amount) {
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
@@ -64,18 +70,18 @@ public abstract class Vehicle implements Movable {
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
     public void turnRight(){
-        currentDirection -= 1;
+        setCurrentDirection(getCurrentDirection()-1);
 
-        if(currentDirection == 0){
-            currentDirection = 4;
+        if(getCurrentDirection() == 0){
+            setCurrentDirection(4);
         }
     }
 
     public void turnLeft(){
-        currentDirection += 1;
+        setCurrentDirection(getCurrentDirection()+1);
 
-        if(currentDirection == 5){
-            currentDirection = 1;
+        if(getCurrentDirection() == 5){
+            setCurrentDirection(1);
         }
     }
 
@@ -86,7 +92,7 @@ public abstract class Vehicle implements Movable {
     // when 5 set to one, when 0 set to 4
 
     public void move(){
-        switch(currentDirection){
+        switch(getCurrentDirection()){
             case 1 ->
                     xPos += currentSpeed;
             case 2 ->
@@ -94,7 +100,9 @@ public abstract class Vehicle implements Movable {
             case 3 ->
                     xPos -= currentSpeed;
             case 4 ->
-                    yPos -= currentSpeed;
+                yPos -= currentSpeed;
+            default -> throw new
+                    IllegalStateException("Unexpected value (getCurrentDirection): " + getCurrentDirection());
         }
     }
 
