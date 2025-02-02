@@ -27,11 +27,11 @@ public class VehicleTest {
         for (int i = 1; i < 5; i++) {
             volvo.setCurrentDirection(i);
 
-            double xPos1 = volvo.getxPos();
-            double yPos1 = volvo.getyPos();
+            double xPos1 = volvo.getXPos();
+            double yPos1 = volvo.getYPos();
             volvo.move();
-            double xPos2 = volvo.getxPos();
-            double yPos2 = volvo.getyPos();
+            double xPos2 = volvo.getXPos();
+            double yPos2 = volvo.getYPos();
 
             assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
         }

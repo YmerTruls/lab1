@@ -23,12 +23,12 @@ public abstract class Vehicle implements Movable {
         stopEngine(); // Set speed to 0 initially
     }
 
-    public double getxPos(){
+    public double getXPos(){
         return xPos;
     }
 
 
-    public double getyPos() {
+    public double getYPos() {
         return yPos;
     }
 
