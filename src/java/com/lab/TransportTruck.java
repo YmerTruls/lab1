@@ -53,7 +53,8 @@ public abstract class TransportTruck extends Truck {
     }
 
     public void load(Car car){
-        if(getRampDown() && loadedCars.size() < 6 &&
+        if(getRampDown() &&
+                loadedCars.size() < 6 &&
                 Math.abs(car.getXPos() - getXPos()) < 10 &&
                 Math.abs(car.getYPos() - getYPos()) < 10 &&
                 car.getCurrentSpeed() == 0 &&

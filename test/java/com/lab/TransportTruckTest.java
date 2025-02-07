@@ -11,6 +11,7 @@ public class TransportTruckTest {
     @DisplayName("Load cars case 1")
     @Test
     void loadCarsCase1(){
+
         //Create vehicle objects
         TransportTruck Daf = new DAFFXH();
         Volvo240 Volvo = new Volvo240();
@@ -20,7 +21,7 @@ public class TransportTruckTest {
         // Math.abs(car.getXPos() - getXPos()) < 10 | OK
         // Math.abs(car.getYPos() - getYPos()) < 10 | OK
         // car.getCurrentSpeed == 0                 | OK
-        //!loadedCars.contains(car)                 | OK
+        // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
         Daf.setPosition(0,0);
@@ -35,17 +36,16 @@ public class TransportTruckTest {
     @DisplayName("Load cars case 2")
     @Test
     void loadCarsCase2(){
+        //Create objects
+        TransportTruck Daf = new DAFFXH();
+        Volvo240 Volvo = new Volvo240();
 
         // getRampDown() == True                    | OK
         // loadedCars.size() <= 6                   | OK
         // Math.abs(car.getXPos() - getXPos()) < 10 | OK
         // Math.abs(car.getYPos() - getYPos()) < 10 | OK
         // car.getCurrentSpeed == 0                 | OK
-        //!loadedCars.contains(car)                 | NOK
-
-        //Create objects
-        TransportTruck Daf = new DAFFXH();
-        Volvo240 Volvo = new Volvo240();
+        // !loadedCars.contains(car)                | NOK
 
         Daf.setRampDown(true);
         Daf.setPosition(0, 0);
@@ -73,7 +73,7 @@ public class TransportTruckTest {
         // Math.abs(car.getXPos() - getXPos()) < 10 | OK
         // Math.abs(car.getYPos() - getYPos()) < 10 | OK
         // car.getCurrentSpeed == 0                 | NOK
-        //!loadedCars.contains(car)                 | OK
+        // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
         Daf.setPosition(0, 0);
@@ -97,7 +97,7 @@ public class TransportTruckTest {
         // Math.abs(car.getXPos() - getXPos()) < 10 | OK
         // Math.abs(car.getYPos() - getYPos()) < 10 | NOK
         // car.getCurrentSpeed == 0                 | OK
-        //!loadedCars.contains(car)                 | OK
+        // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
         Daf.setPosition(0,15);
@@ -119,7 +119,7 @@ public class TransportTruckTest {
         // Math.abs(car.getXPos() - getXPos()) < 10 | NOK
         // Math.abs(car.getYPos() - getYPos()) < 10 | OK
         // car.getCurrentSpeed == 0                 | OK
-        //!loadedCars.contains(car)                 | OK
+        // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
         Daf.setPosition(15,0);
@@ -148,7 +148,7 @@ public class TransportTruckTest {
         // Math.abs(car.getXPos() - getXPos()) < 10 | OK
         // Math.abs(car.getYPos() - getYPos()) < 10 | OK
         // car.getCurrentSpeed == 0                 | OK
-        //!loadedCars.contains(car)                 | OK
+        // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
         Daf.setPosition(0, 0);
@@ -189,7 +189,7 @@ public class TransportTruckTest {
         // Math.abs(car.getXPos() - getXPos()) < 10 | OK
         // Math.abs(car.getYPos() - getYPos()) < 10 | OK
         // car.getCurrentSpeed == 0                 | OK
-        //!loadedCars.contains(car)                 | OK
+        // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(false);
         Daf.setPosition(0,0);

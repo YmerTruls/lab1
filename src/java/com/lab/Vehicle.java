@@ -34,8 +34,6 @@ public abstract class Vehicle implements Movable {
         return yPos;
     }
 
-
-
     public void setPosition(double xPos, double yPos) {
         this.xPos = xPos;
         this.yPos = yPos;

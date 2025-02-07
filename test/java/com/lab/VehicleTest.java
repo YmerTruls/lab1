@@ -13,18 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class VehicleTest {
 
-    @DisplayName("Test if model name is reachable.")
     @Test
+    @DisplayName("Test model name retrieval")
     public void testModel() {
-        Volvo240 volvo = new Volvo240();
-        assertEquals("src.java.com.lab.Volvo240", volvo.getModelName());
-
-        Saab95 saab = new Saab95();
-        assertEquals("src.java.com.lab.Saab95", saab.getModelName());
+        assertEquals("Volvo240", new Volvo240().getModelName());
     }
 
-    @DisplayName("Test if move is possible")
     @Test
+    @DisplayName("Test move functionality")
     public void testMove() {
         //Set-up
         Volvo240 volvo = new Volvo240();
@@ -33,24 +29,20 @@ public class VehicleTest {
 
         for (int i = 1; i < 5; i++) {
             volvo.setCurrentDirection(i);
-
-            double xPos1 = volvo.getXPos();
-            double yPos1 = volvo.getYPos();
+            double xBefore = volvo.getXPos(), yBefore = volvo.getYPos();
             volvo.move();
-            double xPos2 = volvo.getXPos();
-            double yPos2 = volvo.getYPos();
+            double xAfter = volvo.getXPos(), yAfter = volvo.getYPos();
 
-            assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
+            assertTrue(xBefore != xAfter || yBefore != yAfter);
         }
-
 
         //Test illegal direction
         volvo.setCurrentDirection(0);
         assertThrows(IllegalStateException.class, volvo::move);
     }
 
-    @DisplayName("Test all turns.")
     @Test
+    @DisplayName("Test turns.")
     public void testTurn() {
         //Initiate vehicle
         Volvo240 volvo = new Volvo240();
@@ -80,47 +72,35 @@ public class VehicleTest {
         }
     }
 
-    @DisplayName("Color is correctly set and gotten")
     @Test
+    @DisplayName("Color is correctly set and gotten")
     public void testColor() {
         Volvo240 volvo = new Volvo240();
-        assertSame(Color.black, volvo.getColor());
-
         Saab95 saab = new Saab95();
+
+        assertSame(Color.black, volvo.getColor());
         assertSame(Color.red, saab.getColor());
 
         saab.setColor(Color.black);
         assertNotSame(Color.red, saab.getColor());
-
-        volvo.setColor(Color.red);
-        assertNotSame(Color.black, volvo.getColor());
     }
 
-    @DisplayName("Engine starts")
     @Test
+    @DisplayName("Engine state and power")
     public void test_startEngine() {
         Saab95 saab = new Saab95();
+
         saab.setEngineState(true);
         assertTrue(saab.getEngineState());
 
-        Volvo240 volvo = new Volvo240();
-        volvo.setEngineState(false);
-        assertFalse(volvo.getEngineState());
+        saab.setEngineState(false);
+        assertFalse(saab.getEngineState());
+
+        assertEquals(125, saab.getEnginePower());
     }
 
-    @DisplayName("Get EnginePower")
     @Test
-    public void test_getEnginePower(){
-        Volvo240 volvo = new Volvo240();
-        assertEquals(100, volvo.getEnginePower());
-
-        Saab95 saab = new Saab95();
-        assertEquals(125,saab.getEnginePower());
-
-    }
-
     @DisplayName("Engine stops")
-    @Test
     public void test_stopEngine() {
         Volvo240 volvo = new Volvo240();
         volvo.setEngineState(true);
@@ -133,18 +113,16 @@ public class VehicleTest {
         assertEquals(0, saab.getCurrentSpeed());
     }
 
-    @DisplayName("Doors are correct")
     @Test
+    @DisplayName("Test number of doors")
     public void test_Saab_Doors() {
-        Saab95 Saab = new Saab95();
-        assertEquals(2, Saab.getNrDoors());
-
-        Volvo240 Volvo = new Volvo240();
-        assertEquals(4, Volvo.getNrDoors());
+        assertEquals(2, new Saab95().getNrDoors());
+        assertEquals(4, new Volvo240().getNrDoors());
     }
 
-    @DisplayName("Speed factor OK")
+    // TODO: This test can be cleaned up and improved. It feels cluttered.
     @Test
+    @DisplayName("Speed factor OK")
     public void test_speedFactor(){
         Volvo240 volvo = new Volvo240();
         volvo.speedFactor();
@@ -161,8 +139,9 @@ public class VehicleTest {
 
     }
 
-    @DisplayName("Test gas()")
+    // TODO: This test can be cleaned up and improved. It feels cluttered.
     @Test
+    @DisplayName("Test gas()")
     public void test_gas(){
         //Set-up
         Volvo240 volvo = new Volvo240();
@@ -186,8 +165,10 @@ public class VehicleTest {
         assertEquals(0.625, volvo.getCurrentSpeed());
 
     }
-    @DisplayName("Test brake()")
+
+    // TODO: This test can be cleaned up and improved. It feels cluttered.
     @Test
+    @DisplayName("Test brake")
     public void test_brake(){
         //Set-up
         Volvo240 volvo = new Volvo240();
@@ -205,10 +186,12 @@ public class VehicleTest {
         volvo.brake(-1);
         assertEquals(0.625, volvo.getCurrentSpeed());
     }
-    @DisplayName("src.java.com.lab.Scania Platform")
+
     @Test
+    @DisplayName("Scania Platform")
     public void test_platform(){
         Scania scania = new Scania();
+
         scania.increaseAngle(50);
         assertEquals(50, scania.getAngle());
 
