@@ -1,5 +1,11 @@
+package test.java.com.lab;
+import src.java.com.lab.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import src.java.com.lab.Saab95;
+import src.java.com.lab.Scania;
+import src.java.com.lab.Volvo240;
 
 import java.awt.*;
 
@@ -11,10 +17,10 @@ public class VehicleTest {
     @Test
     public void testModel() {
         Volvo240 volvo = new Volvo240();
-        assertEquals("Volvo240", volvo.getModelName());
+        assertEquals("src.java.com.lab.Volvo240", volvo.getModelName());
 
         Saab95 saab = new Saab95();
-        assertEquals("Saab95", saab.getModelName());
+        assertEquals("src.java.com.lab.Saab95", saab.getModelName());
     }
 
     @DisplayName("Test if move is possible")
@@ -22,7 +28,8 @@ public class VehicleTest {
     public void testMove() {
         //Set-up
         Volvo240 volvo = new Volvo240();
-        volvo.startEngine();
+        volvo.setEngineState(true);
+        volvo.gas(0.5);
 
         for (int i = 1; i < 5; i++) {
             volvo.setCurrentDirection(i);
@@ -35,6 +42,7 @@ public class VehicleTest {
 
             assertTrue(xPos1 != xPos2 || yPos1 != yPos2);
         }
+
 
         //Test illegal direction
         volvo.setCurrentDirection(0);
@@ -92,12 +100,12 @@ public class VehicleTest {
     @Test
     public void test_startEngine() {
         Saab95 saab = new Saab95();
-        saab.startEngine();
-        assertEquals(0.1, saab.getCurrentSpeed());
+        saab.setEngineState(true);
+        assertTrue(saab.getEngineState());
 
         Volvo240 volvo = new Volvo240();
-        volvo.startEngine();
-        assertEquals(0.1, volvo.getCurrentSpeed());
+        volvo.setEngineState(false);
+        assertFalse(volvo.getEngineState());
     }
 
     @DisplayName("Get EnginePower")
@@ -115,13 +123,13 @@ public class VehicleTest {
     @Test
     public void test_stopEngine() {
         Volvo240 volvo = new Volvo240();
-        volvo.startEngine();
-        volvo.stopEngine();
+        volvo.setEngineState(true);
+        volvo.setEngineState(false);
         assertEquals(0, volvo.getCurrentSpeed());
 
         Saab95 saab = new Saab95();
-        saab.startEngine();
-        saab.stopEngine();
+        saab.setEngineState(true);
+        saab.setEngineState(false);
         assertEquals(0, saab.getCurrentSpeed());
     }
 
@@ -158,47 +166,46 @@ public class VehicleTest {
     public void test_gas(){
         //Set-up
         Volvo240 volvo = new Volvo240();
-        volvo.startEngine();
-        double prevSpeed = volvo.getCurrentSpeed();
+        volvo.setEngineState(true);
 
         //Test OK value
-        volvo.startEngine();
+        volvo.setEngineState(true);
         volvo.gas(0.5);
-        assertEquals(0.725, volvo.getCurrentSpeed());
+        assertEquals(0.625, volvo.getCurrentSpeed());
 
         //Test NOK value
-        volvo.startEngine();
         volvo.gas(5);
-        assertEquals(prevSpeed, volvo.getCurrentSpeed());
+        assertEquals(0.625, volvo.getCurrentSpeed());
 
-        volvo.startEngine();
+
         volvo.gas(-1);
-        assertEquals(prevSpeed, volvo.getCurrentSpeed());
+        assertEquals(0.625, volvo.getCurrentSpeed());
+
+        volvo.setEngineState(false);
+        volvo.gas(0.5);
+        assertEquals(0.625, volvo.getCurrentSpeed());
+
     }
     @DisplayName("Test brake()")
     @Test
     public void test_brake(){
         //Set-up
         Volvo240 volvo = new Volvo240();
-        volvo.startEngine();
-        double prevSpeed = volvo.getCurrentSpeed();
+        volvo.setEngineState(true);
 
         //Test OK value
-        volvo.startEngine();
         volvo.gas(1);
         volvo.brake(0.5);
-        assertEquals(0.725, volvo.getCurrentSpeed(), 0.001);
+        assertEquals(0.625, volvo.getCurrentSpeed(), 0.001);
 
         //Test NOK value
-        volvo.startEngine();
         volvo.brake(5);
-        assertEquals(prevSpeed, volvo.getCurrentSpeed());
+        assertEquals(0.625, volvo.getCurrentSpeed());
 
-        volvo.startEngine();
         volvo.brake(-1);
-        assertEquals(prevSpeed, volvo.getCurrentSpeed());
+        assertEquals(0.625, volvo.getCurrentSpeed());
     }
-    @DisplayName("Scania Platform")
+    @DisplayName("src.java.com.lab.Scania Platform")
     @Test
     public void test_platform(){
         Scania scania = new Scania();
@@ -214,8 +221,9 @@ public class VehicleTest {
         scania.increaseAngle(80);
         assertEquals(70, scania.getAngle());
 
-        scania.startEngine();
+        scania.setEngineState(true);
         double xPos = scania.getXPos();
+        scania.gas(0.5);
         scania.move();
         assertEquals(xPos, scania.getXPos());
 
@@ -228,9 +236,6 @@ public class VehicleTest {
         assertNotEquals(xPos, scania.getXPos());
 
         scania.incrementSpeed(1);
-        assertEquals(2.1, scania.getCurrentSpeed());
-
-
+        assertEquals(3, scania.getCurrentSpeed());
     }
-
 }

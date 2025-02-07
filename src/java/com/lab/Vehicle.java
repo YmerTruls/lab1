@@ -1,26 +1,28 @@
+package src.java.com.lab;
+
 import java.awt.*;
 
 public abstract class Vehicle implements Movable {
-
-
 
     private final int nrDoors; // Number of doors on the car
     private final double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private final String modelName; // The car model name
+    private boolean engineState;
 
     private double xPos = 0; //X-position
     private double yPos = 0; //Y-position
     private int currentDirection = 1; //current facing direction
     public abstract double speedFactor();
+    private double size;
 
     public Vehicle(int nrDoors, double enginePower, Color color, String modelName) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
-        stopEngine(); // Set speed to 0 initially
+        setEngineState(false); // Set speed to 0 initially
     }
 
     public double getXPos(){
@@ -31,6 +33,15 @@ public abstract class Vehicle implements Movable {
     public double getYPos() {
         return yPos;
     }
+
+
+
+    public void setPosition(double xPos, double yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
+
+
 
     public String getModelName() {
         return modelName;
@@ -51,15 +62,10 @@ public abstract class Vehicle implements Movable {
     public void setColor(Color clr){
         color = clr;
     }
-    public void startEngine(){
-        currentSpeed = 0.1;
-    }
-    public void stopEngine(){
-        currentSpeed = 0;
-    }
-    public void setCurrentDirection(int direction){
-        currentDirection = direction;
-    }
+
+    public void setEngineState(boolean state){ engineState = state; }
+    public boolean getEngineState(){ return engineState; }
+    public void setCurrentDirection(int direction){ currentDirection = direction; }
     public int getCurrentDirection(){
         return currentDirection;
     }
@@ -107,7 +113,7 @@ public abstract class Vehicle implements Movable {
     }
 
     public void gas(double amount){
-        if(0 <= amount && amount <= 1){
+        if(0 <= amount && amount <= 1 && getEngineState()){
             incrementSpeed(amount);
         }
     }

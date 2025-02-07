@@ -1,13 +1,15 @@
+package src.java.com.lab;
+
 import java.awt.*;
 
-public class Saab95 extends Vehicle{
+public class Saab95 extends Car{
 
     private boolean turboOn;
 
     public Saab95(){
-        super(2, 125, Color.red, "Saab95");
+        super(2, 125, Color.red, "src.java.com.lab.Saab95");
         setTurboOff();
-        stopEngine();
+        setEngineState(false);
     }
 
     public void setTurboOn(){
@@ -23,5 +25,4 @@ public class Saab95 extends Vehicle{
         if(turboOn) turbo = 1.3;
         return getEnginePower() * 0.01 * turbo;
     }
-
 }
