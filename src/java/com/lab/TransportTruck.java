@@ -6,11 +6,13 @@ import java.util.ArrayList;
 public abstract class TransportTruck extends Truck {
 
     private boolean rampDown;
+    private final int capacity;
     private final ArrayList<Car> loadedCars;
 
-    public TransportTruck(int nrDoors, double enginePower, Color color, String modelName) {
+    public TransportTruck(int nrDoors, double enginePower, Color color, String modelName, int capacity) {
         super(nrDoors, enginePower, color, modelName);
         this.loadedCars = new ArrayList<>();
+        this.capacity = capacity;
 
     }
 
@@ -54,7 +56,7 @@ public abstract class TransportTruck extends Truck {
 
     public void load(Car car){
         if(getRampDown() &&
-                loadedCars.size() < 6 &&
+                loadedCars.size() < capacity &&
                 Math.abs(car.getXPos() - getXPos()) < 10 &&
                 Math.abs(car.getYPos() - getYPos()) < 10 &&
                 car.getCurrentSpeed() == 0 &&
@@ -70,7 +72,7 @@ public abstract class TransportTruck extends Truck {
         int size = loadedCars.size();
         if(getRampDown() && size > 0){
             Car car = loadedCars.get(size-1);
-            loadedCars.remove(size);
+            loadedCars.remove(size-1);
             car.setPosition((getXPos() -5 ), (getYPos()- 5));
             return car;
         }

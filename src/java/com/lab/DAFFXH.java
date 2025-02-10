@@ -6,12 +6,10 @@ public class DAFFXH extends TransportTruck {
 
 
     public DAFFXH() {
-        super(6,70,Color.blue,"DafXH");
+        super(6,70,Color.blue,"DafXH", 6);
         setRampDown(false);
     }
 
-    public double speedFactor(){
-        return getEnginePower() * 0.01;
-    }
+
 
 }

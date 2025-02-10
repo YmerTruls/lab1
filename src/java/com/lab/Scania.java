@@ -26,9 +26,6 @@ public class Scania extends Truck {
 
         platformAngle = Math.max(platformAngle - Math.abs(amount), 0);
     }
-    public double speedFactor() {
-        return getEnginePower() * 0.01;
-    }
 
     @Override
     public void move(){

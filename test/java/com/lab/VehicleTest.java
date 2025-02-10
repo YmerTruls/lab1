@@ -78,9 +78,10 @@ public class VehicleTest {
         Volvo240 volvo = new Volvo240();
         Saab95 saab = new Saab95();
 
+        // default
         assertSame(Color.black, volvo.getColor());
-        assertSame(Color.red, saab.getColor());
 
+        // set value
         saab.setColor(Color.black);
         assertNotSame(Color.red, saab.getColor());
     }

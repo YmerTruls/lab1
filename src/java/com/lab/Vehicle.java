@@ -15,7 +15,6 @@ public abstract class Vehicle implements Movable {
     private double yPos = 0; //Y-position
     private int currentDirection = 1; //current facing direction
     public abstract double speedFactor();
-    private double size;
 
     public Vehicle(int nrDoors, double enginePower, Color color, String modelName) {
         this.nrDoors = nrDoors;
