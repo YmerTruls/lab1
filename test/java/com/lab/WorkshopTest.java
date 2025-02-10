@@ -52,11 +52,12 @@ public class WorkshopTest {
         assertSame(volvo, unloadedCar);
     }
 
-    //@Test
-    //@DisplayName("Unload empty workshop")
-    //void unloadEmpty() {
-        //MulleMeck volvoWorkshop = new MulleMeck();
-        //Vehicle unloaded = volvoWorkshop.unload();
-        //assertNull(unloaded);
-    //}
+    @Test
+    @DisplayName("Unload empty workshop")
+    void unloadEmpty() {
+        MulleMeck volvoWorkshop = new MulleMeck();
+        Volvo240 volvo = new Volvo240();
+        Vehicle unloaded = volvoWorkshop.unload(volvo);
+        assertNull(unloaded);
+    }
 }

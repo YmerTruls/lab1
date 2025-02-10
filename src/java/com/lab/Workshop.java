@@ -39,9 +39,15 @@ public abstract class Workshop<T extends Vehicle> {
     }
 
     public T unload(T car) {
-        loadedCars.remove(car);
-        car.setPosition(getXPos() - 5, getYPos() - 5);
-        return car;
+        if (loadedCars.remove(car)) {
+            car.setPosition(getXPos() - 5, getYPos() - 5);
+            return car;
+        }
+        else{
+            System.out.println("Car not found in workshop");
+            return null;
+
+            }
     }
 
     public ArrayList<T> getLoadedCars() {
