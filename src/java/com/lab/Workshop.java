@@ -13,6 +13,7 @@ public abstract class Workshop<T extends Vehicle> {
         this.capacity = capacity;
         this.XPos = XPos;
         this.YPos = YPos;
+
     }
 
     public double getYPos() {
@@ -37,16 +38,10 @@ public abstract class Workshop<T extends Vehicle> {
         }
     }
 
-    public T unload() {
-        int size = loadedCars.size();
-
-        if (size > 0) {
-            T car = loadedCars.get(size - 1);
-            loadedCars.remove(size - 1);
-            car.setPosition((getXPos() - 5), (getYPos() - 5));
-            return car;
-        }
-        return null;
+    public T unload(T car) {
+        loadedCars.remove(car);
+        car.setPosition(getXPos() - 5, getYPos() - 5);
+        return car;
     }
 
     public ArrayList<T> getLoadedCars() {
