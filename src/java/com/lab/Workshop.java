@@ -19,35 +19,32 @@ public abstract class Workshop<T extends Vehicle> {
     public double getYPos() {
         return YPos;
     }
-
     public double getXPos() {
         return XPos;
     }
 
-    public void load(T car) {
-        if (
-                loadedCars.size() < capacity &&
-                Math.abs(car.getXPos() - getXPos()) < 10 &&
-                Math.abs(car.getYPos() - getYPos()) < 10 &&
-                car.getCurrentSpeed() == 0 &&
-                !loadedCars.contains(car)) {
+    public void load(T vehicleInWorkshop) {
+        if(loadedCars.size() < capacity &&
+                Math.abs(vehicleInWorkshop.getXPos() - getXPos()) < 10 &&
+                Math.abs(vehicleInWorkshop.getYPos() - getYPos()) < 10 &&
+                vehicleInWorkshop.getCurrentSpeed() == 0 &&
+                !loadedCars.contains(vehicleInWorkshop)) {
 
-            loadedCars.add(car);
-            car.setPosition(getXPos(), getYPos());
-            car.setEngineState(false);
+            loadedCars.add(vehicleInWorkshop);
+            vehicleInWorkshop.setPosition(getXPos(), getYPos());
+            vehicleInWorkshop.setEngineState(false);
         }
     }
 
-    public T unload(T car) {
-        if (loadedCars.remove(car)) {
-            car.setPosition(getXPos() - 5, getYPos() - 5);
-            return car;
+    public T unload(T vehicleInWorkshop) {
+        if (loadedCars.remove(vehicleInWorkshop)) {
+            vehicleInWorkshop.setPosition(getXPos() - 5, getYPos() - 5);
+            return vehicleInWorkshop;
         }
         else{
             System.out.println("Car not found in workshop");
             return null;
-
-            }
+        }
     }
 
     public ArrayList<T> getLoadedCars() {

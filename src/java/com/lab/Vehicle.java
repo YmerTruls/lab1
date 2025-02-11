@@ -27,8 +27,6 @@ public abstract class Vehicle implements Movable {
     public double getXPos(){
         return xPos;
     }
-
-
     public double getYPos() {
         return yPos;
     }
@@ -37,8 +35,6 @@ public abstract class Vehicle implements Movable {
         this.xPos = xPos;
         this.yPos = yPos;
     }
-
-
 
     public String getModelName() {
         return modelName;
