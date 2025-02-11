@@ -31,9 +31,17 @@ public abstract class Vehicle implements Movable {
         return yPos;
     }
 
-    public void setPosition(double xPos, double yPos) {
+    private void setPosition(double xPos, double yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
+    }
+
+    public void moveRelative(Byte xAmount, Byte yAmount) {
+        setPosition(getXPos() + xAmount, getYPos() + yAmount);
+    }
+
+    public void moveWith(Positionable target) {
+        setPosition(target.getXPos(), target.getYPos());
     }
 
     public String getModelName() {

@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-
-
 public class WorkshopTest {
 
     @Test
@@ -18,8 +15,11 @@ public class WorkshopTest {
         MulleMeck volvoWorkshop = new MulleMeck();
 
         // MulleMeck standard values: XPos=50, YPos=60
-        assertEquals(50, volvoWorkshop.getXPos());
-        assertEquals(60, volvoWorkshop.getYPos());
+
+        assertAll(
+                () -> assertEquals(50, volvoWorkshop.getXPos()),
+                () -> assertEquals(60, volvoWorkshop.getYPos())
+        );
     }
 
     @Test
@@ -28,12 +28,13 @@ public class WorkshopTest {
         // Create and load Volvo240 object
         MulleMeck volvoWorkshop = new MulleMeck();
         Volvo240 volvo = new Volvo240();
-        volvo.setPosition(50,60);
+        volvo.moveWith(volvoWorkshop);
         volvoWorkshop.load(volvo);
 
         // Test if Volvo240 was loaded
         ArrayList<Volvo240> loadedCars = volvoWorkshop.getLoadedCars();
         Volvo240 firstCar = loadedCars.getFirst();
+
         assertSame(volvo, firstCar);
     }
 
@@ -43,13 +44,15 @@ public class WorkshopTest {
         // Create and load Volvo240 object
         MulleMeck volvoWorkshop = new MulleMeck();
         Volvo240 volvo = new Volvo240();
-        volvo.setPosition(50,60);
+        volvo.moveWith(volvoWorkshop);
         volvoWorkshop.load(volvo);
 
         Car unloadedCar = volvoWorkshop.unload(volvo);
 
-        assertTrue(volvoWorkshop.getLoadedCars().isEmpty());
-        assertSame(volvo, unloadedCar);
+        assertAll(
+                () -> assertTrue(volvoWorkshop.getLoadedCars().isEmpty()),
+                () -> assertSame(volvo, unloadedCar)
+        );
     }
 
     @Test

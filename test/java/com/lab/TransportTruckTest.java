@@ -10,7 +10,7 @@ public class TransportTruckTest {
 
     @DisplayName("Load cars case 1")
     @Test
-    void loadCarsCase1(){
+    void loadCarsCase1() {
 
         //Create vehicle objects
         TransportTruck Daf = new DAFFXH();
@@ -24,8 +24,6 @@ public class TransportTruckTest {
         // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
-        Daf.setPosition(0,0);
-        Volvo.setPosition(0,0);
         Daf.load(Volvo);
 
         // Assertion
@@ -35,7 +33,7 @@ public class TransportTruckTest {
 
     @DisplayName("Load cars case 2")
     @Test
-    void loadCarsCase2(){
+    void loadCarsCase2() {
         //Create objects
         TransportTruck Daf = new DAFFXH();
         Volvo240 Volvo = new Volvo240();
@@ -48,8 +46,6 @@ public class TransportTruckTest {
         // !loadedCars.contains(car)                | NOK
 
         Daf.setRampDown(true);
-        Daf.setPosition(0, 0);
-        Volvo.setPosition(0, 0);
 
         // Load the same object twice
         Daf.load(Volvo);
@@ -57,8 +53,6 @@ public class TransportTruckTest {
 
         assertEquals(1, Daf.getLoadedCars().size());
     }
-
-
 
 
     @DisplayName("Load cars case 3")
@@ -76,8 +70,6 @@ public class TransportTruckTest {
         // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
-        Daf.setPosition(0, 0);
-        Volvo.setPosition(0, 0);
         Volvo.setEngineState(true);
         Volvo.gas(0.5);
         Daf.load(Volvo);
@@ -85,9 +77,10 @@ public class TransportTruckTest {
         // Assertion
         assertFalse(Daf.getLoadedCars().contains(Volvo));
     }
+
     @DisplayName("Load cars case 4")
     @Test
-    void loadCarsCase4(){
+    void loadCarsCase4() {
         //Create vehicle objects
         TransportTruck Daf = new DAFFXH();
         Volvo240 Volvo = new Volvo240();
@@ -99,17 +92,22 @@ public class TransportTruckTest {
         // car.getCurrentSpeed == 0                 | OK
         // !loadedCars.contains(car)                | OK
 
+        Daf.turnLeft();
+        Daf.setEngineState(true);
+        Daf.gas(1);
+        Daf.move();
         Daf.setRampDown(true);
-        Daf.setPosition(0,15);
-        Volvo.setPosition(0,0);
+        //Daf.setPosition(0,15);
+        //Volvo.setPosition(0,0);
         Daf.load(Volvo);
 
         // Assertion
         assertFalse(Daf.getLoadedCars().contains(Volvo));
     }
+
     @DisplayName("Load cars case 5")
     @Test
-    void loadCarsCase5(){
+    void loadCarsCase5() {
         //Create vehicle objects
         TransportTruck Daf = new DAFFXH();
         Volvo240 Volvo = new Volvo240();
@@ -121,9 +119,12 @@ public class TransportTruckTest {
         // car.getCurrentSpeed == 0                 | OK
         // !loadedCars.contains(car)                | OK
 
+        Daf.setEngineState(true);
+        Daf.gas(1);
+        Daf.move();
         Daf.setRampDown(true);
-        Daf.setPosition(15,0);
-        Volvo.setPosition(0,0);
+        //Daf.setPosition(15,0);
+        //Volvo.setPosition(0,0);
         Daf.load(Volvo);
 
         // Assertion
@@ -151,35 +152,22 @@ public class TransportTruckTest {
         // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(true);
-        Daf.setPosition(0, 0);
 
-        Volvo1.setPosition(0, 0);
         Daf.load(Volvo1);
-
-        Volvo2.setPosition(0, 0);
         Daf.load(Volvo2);
-
-        Volvo3.setPosition(0, 0);
         Daf.load(Volvo3);
-
-        Volvo4.setPosition(0, 0);
         Daf.load(Volvo4);
-
-        Volvo5.setPosition(0, 0);
         Daf.load(Volvo5);
-
-        Volvo6.setPosition(0, 0);
         Daf.load(Volvo6);
-
-        Saab.setPosition(0,0);
         Daf.load(Saab);
 
         // Assertion
         assertFalse(Daf.getLoadedCars().contains(Saab));
     }
+
     @DisplayName("Load cars case 7")
     @Test
-    void loadCarsCase7(){
+    void loadCarsCase7() {
         //Create vehicle objects
         TransportTruck Daf = new DAFFXH();
         Volvo240 Volvo = new Volvo240();
@@ -192,11 +180,66 @@ public class TransportTruckTest {
         // !loadedCars.contains(car)                | OK
 
         Daf.setRampDown(false);
-        Daf.setPosition(0,0);
-        Volvo.setPosition(0,0);
         Daf.load(Volvo);
 
         // Assertion
         assertFalse(Daf.getLoadedCars().contains(Volvo));
+    }
+
+    @DisplayName("Move loaded cars")
+    @Test
+    void moveLoadedCars() {
+        //Create vehicle objects
+        DAFFXH Daf = new DAFFXH();
+        Volvo240 Volvo = new Volvo240();
+
+        Daf.setRampDown(true);
+        Daf.load(Volvo);
+        Daf.setRampDown(false);
+        Daf.setEngineState(true);
+        Daf.gas(1);
+        Daf.move();
+
+        // Assertion
+        assertEquals(Daf.getXPos() + Daf.getYPos(), Volvo.getXPos() + Volvo.getYPos());
+    }
+    @DisplayName("Unable to gas if ramp down")
+    @Test
+    void rampTestGas() {
+        //Create vehicle objects
+        DAFFXH Daf = new DAFFXH();
+
+        Daf.setRampDown(true);
+        Daf.setEngineState(true);
+        Daf.gas(1);
+        Daf.move();
+
+        // Assertion
+        assertEquals(0, Daf.getXPos() + Daf.getYPos());
+    }
+    @Test
+    @DisplayName("Unload cars from truck")
+    void unload() {
+        // Create and load Volvo240 object
+        DAFFXH Daf = new DAFFXH();
+        Volvo240 volvo = new Volvo240();
+        volvo.moveWith(Daf);
+        Daf.setRampDown(true);
+        Daf.load(volvo);
+
+        Car unloadedCar = Daf.unload();
+
+        assertAll(
+                () -> assertTrue(Daf.getLoadedCars().isEmpty()),
+                () -> assertSame(volvo, unloadedCar)
+        );
+    }
+
+    @Test
+    @DisplayName("Unload empty truck")
+    void unloadEmpty() {
+        DAFFXH Daf = new DAFFXH();
+        Vehicle unloaded = Daf.unload();
+        assertNull(unloaded);
     }
 }

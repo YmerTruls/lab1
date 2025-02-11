@@ -1,5 +1,4 @@
 package test.java.com.lab;
-import src.java.com.lab.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -95,9 +94,11 @@ public class VehicleTest {
         assertTrue(saab.getEngineState());
 
         saab.setEngineState(false);
-        assertFalse(saab.getEngineState());
 
-        assertEquals(125, saab.getEnginePower());
+        assertAll(
+                () -> assertFalse(saab.getEngineState()),
+                () -> assertEquals(125, saab.getEnginePower())
+        );
     }
 
     @Test
@@ -117,8 +118,10 @@ public class VehicleTest {
     @Test
     @DisplayName("Test number of doors")
     public void test_Saab_Doors() {
-        assertEquals(2, new Saab95().getNrDoors());
-        assertEquals(4, new Volvo240().getNrDoors());
+        assertAll(
+                () -> assertEquals(2, new Saab95().getNrDoors()),
+                () -> assertEquals(4, new Volvo240().getNrDoors())
+        );
     }
 
     // TODO: This test can be cleaned up and improved. It feels cluttered.
@@ -193,16 +196,16 @@ public class VehicleTest {
     public void test_platform(){
         Scania scania = new Scania();
 
-        scania.increaseAngle(50);
+        scania.setRampUp(50);
         assertEquals(50, scania.getAngle());
 
-        scania.decreaseAngle(30);
+        scania.setRampDown(30);
         assertEquals(20, scania.getAngle());
 
-        scania.decreaseAngle(50);
+        scania.setRampDown(50);
         assertEquals(0, scania.getAngle());
 
-        scania.increaseAngle(80);
+        scania.setRampUp(80);
         assertEquals(70, scania.getAngle());
 
         scania.setEngineState(true);
@@ -211,11 +214,11 @@ public class VehicleTest {
         scania.move();
         assertEquals(xPos, scania.getXPos());
 
-        scania.decreaseAngle(50);
-        scania.increaseAngle(10);
+        scania.setRampDown(50);
+        scania.setRampUp(10);
         assertEquals(20, scania.getAngle());
 
-        scania.decreaseAngle(20);
+        scania.setRampDown(20);
         scania.move();
         assertNotEquals(xPos, scania.getXPos());
 

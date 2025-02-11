@@ -13,7 +13,6 @@ public abstract class TransportTruck extends Truck {
         super(nrDoors, enginePower, color, modelName);
         this.loadedCars = new ArrayList<>();
         this.capacity = capacity;
-
     }
 
     public void setRampDown(boolean state){
@@ -35,9 +34,8 @@ public abstract class TransportTruck extends Truck {
     public void move(){
         super.move();
         for (Car car : loadedCars) {
-            car.setPosition(getXPos(),getXPos());
+            car.moveWith(this);
         }
-
     }
 
     @Override
@@ -63,7 +61,7 @@ public abstract class TransportTruck extends Truck {
                 !loadedCars.contains(car)){
 
             loadedCars.add(car);
-            car.setPosition(getXPos(), getYPos());
+            car.moveWith(this);
             car.setEngineState(false);
         }
     }
@@ -73,12 +71,12 @@ public abstract class TransportTruck extends Truck {
         if(getRampDown() && size > 0){
             Car car = loadedCars.get(size-1);
             loadedCars.remove(size-1);
-            car.setPosition((getXPos() -5 ), (getYPos()- 5));
+            car.moveRelative((byte) -5,(byte) -5);
             return car;
         }
         else {
             return null;
         }
-    }
+   }
 
 }

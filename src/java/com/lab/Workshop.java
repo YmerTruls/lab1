@@ -1,7 +1,7 @@
 package src.java.com.lab;
 import java.util.ArrayList;
 
-public abstract class Workshop<T extends Vehicle> {
+public abstract class Workshop<T extends Vehicle> implements Positionable {
 
     private final int capacity;
     private final double XPos;
@@ -31,14 +31,14 @@ public abstract class Workshop<T extends Vehicle> {
                 !loadedCars.contains(vehicleInWorkshop)) {
 
             loadedCars.add(vehicleInWorkshop);
-            vehicleInWorkshop.setPosition(getXPos(), getYPos());
+            vehicleInWorkshop.moveWith(this);
             vehicleInWorkshop.setEngineState(false);
         }
     }
 
     public T unload(T vehicleInWorkshop) {
         if (loadedCars.remove(vehicleInWorkshop)) {
-            vehicleInWorkshop.setPosition(getXPos() - 5, getYPos() - 5);
+            vehicleInWorkshop.moveRelative((byte) -5, (byte) -5);
             return vehicleInWorkshop;
         }
         else{

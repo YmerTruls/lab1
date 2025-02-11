@@ -8,13 +8,14 @@ public class Scania extends Truck {
     public Scania(){
         super(2,200, Color.YELLOW, "src.java.com.lab.Scania");
         setEngineState(false);
-        decreaseAngle(70); //Set platform angle to 0 degrees
+        setRampDown(70); //Set platform angle to 0 degrees
     }
     public double getAngle() {
         return platformAngle;
     }
 
-    public void increaseAngle(double amount) {
+
+    public void setRampUp(double amount) {
         if (getCurrentSpeed() == 0) {
             platformAngle = Math.min(platformAngle + Math.abs(amount), 70);
         } else {
@@ -22,7 +23,7 @@ public class Scania extends Truck {
         }
     }
 
-    public void decreaseAngle(double amount) {
+    public void setRampDown(double amount) {
 
         platformAngle = Math.max(platformAngle - Math.abs(amount), 0);
     }
