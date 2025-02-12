@@ -5,30 +5,32 @@ import java.util.ArrayList;
 
 public abstract class TransportTruck extends Truck {
 
-    private boolean rampDown;
     private final int capacity;
     private final ArrayList<Car> loadedCars;
+    private final OnOffLift transportLift;
 
     public TransportTruck(int nrDoors, double enginePower, Color color, String modelName, int capacity) {
         super(nrDoors, enginePower, color, modelName);
         this.loadedCars = new ArrayList<>();
         this.capacity = capacity;
+        this.transportLift = new OnOffLift();
+        setRampDown(false);
     }
 
     public void setRampDown(boolean state){
         if(state) {
             if (getCurrentSpeed() == 0) {
-                rampDown = true;
+                transportLift.lowerRamp();
             }
         }
 
         else {
-            rampDown = false;
+            transportLift.raiseRamp();
         }
     }
 
     public boolean getRampDown(){
-        return rampDown;
+        return transportLift.isRampLowered();
     }
     @Override
     public void move(){
@@ -40,7 +42,7 @@ public abstract class TransportTruck extends Truck {
 
     @Override
     public void gas(double amount){
-        if (!getRampDown()){
+        if (!transportLift.isRampLowered()){
             super.gas(amount);
         }
         else{
@@ -53,7 +55,7 @@ public abstract class TransportTruck extends Truck {
     }
 
     public void load(Car car){
-        if(getRampDown() &&
+        if(transportLift.isRampLowered() &&
                 loadedCars.size() < capacity &&
                 Math.abs(car.getXPos() - getXPos()) < 10 &&
                 Math.abs(car.getYPos() - getYPos()) < 10 &&
@@ -68,7 +70,7 @@ public abstract class TransportTruck extends Truck {
 
     public Car unload(){
         int size = loadedCars.size();
-        if(getRampDown() && size > 0){
+        if(transportLift.isRampLowered() && size > 0){
             Car car = loadedCars.get(size-1);
             loadedCars.remove(size-1);
             car.moveRelative((byte) -5,(byte) -5);

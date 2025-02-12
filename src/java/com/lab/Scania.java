@@ -4,13 +4,12 @@ import java.awt.Color;
 
 public class Scania extends Truck {
 
-    private AngularLift scaniaLift;
-    private double platformAngle;
+    private final AngularLift scaniaLift;
+
     public Scania(){
         super(2,200, Color.YELLOW, "src.java.com.lab.Scania");
         setEngineState(false);
-        setRampDown(70); //Set platform angle to 0 degrees
-        AngularLift scaniaLift = new AngularLift(0, 70);
+        scaniaLift = new AngularLift(0, 70);
     }
     public double getAngle() {
         return scaniaLift.getAngle();
@@ -25,14 +24,13 @@ public class Scania extends Truck {
         }
     }
 
-    public void setRampDown(double amount) {
-
-        platformAngle = Math.max(platformAngle - Math.abs(amount), 0);
+    public void setRampDown() {
+        scaniaLift.lowerRamp();
     }
 
     @Override
     public void move(){
-        if (getAngle() == 0) {
+        if (scaniaLift.getAngle() == 0) {
             super.move();
         }
         else {

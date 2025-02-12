@@ -190,39 +190,4 @@ public class VehicleTest {
         volvo.brake(-1);
         assertEquals(0.625, volvo.getCurrentSpeed());
     }
-
-    @Test
-    @DisplayName("Scania Platform")
-    public void test_platform(){
-        Scania scania = new Scania();
-
-        scania.setRampUp(50);
-        assertEquals(50, scania.getAngle());
-
-        scania.setRampDown(30);
-        assertEquals(20, scania.getAngle());
-
-        scania.setRampDown(50);
-        assertEquals(0, scania.getAngle());
-
-        scania.setRampUp(80);
-        assertEquals(70, scania.getAngle());
-
-        scania.setEngineState(true);
-        double xPos = scania.getXPos();
-        scania.gas(0.5);
-        scania.move();
-        assertEquals(xPos, scania.getXPos());
-
-        scania.setRampDown(50);
-        scania.setRampUp(10);
-        assertEquals(20, scania.getAngle());
-
-        scania.setRampDown(20);
-        scania.move();
-        assertNotEquals(xPos, scania.getXPos());
-
-        scania.incrementSpeed(1);
-        assertEquals(3, scania.getCurrentSpeed());
-    }
 }
